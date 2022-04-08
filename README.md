@@ -29,6 +29,12 @@ restic_rest_repos:
     listen: ':8001'
     # custom arguments
     args: '--no-auth --append-only --prometheus'
+  - path: '/user/home/backup_private_repos'
+    listen: ":8002"
+    args: "--private-repos"
+    restic_htaccess_accounts:
+      - user: admin
+        password: Chang3Me
 restic_rest_target: 'rest-server.target default.target'
 restic_rest_target_enable: true
 restic_rest_target_start: false
