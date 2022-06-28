@@ -7,8 +7,8 @@ restic_rest_architectures:
   armv6l: "armv6"
 restic_rest_architecture: "{{ restic_rest_architectures[ansible_architecture] | default(ansible_architecture) }}"
 
-restic_rest_user: restic_rest
-restic_rest_group: restic_rest
+restic_rest_user: root
+restic_rest_group: "{{ restic_rest_user }}"
 restic_rest_version: "0.11.0"
 # restic_rest_checksum: sha256:
 restic_rest_url: "https://github.com/restic/rest-server/releases/download/v{{ restic_rest_version }}/rest-server_{{ restic_rest_version }}_{{ ansible_system | lower }}_{{ restic_rest_architecture }}.tar.gz"

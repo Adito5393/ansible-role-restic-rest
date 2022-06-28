@@ -1,10 +1,4 @@
 ---
-- name: Create user
-  ansible.builtin.user:
-    name: "{{ restic_rest_user }}"
-  become: true
-  tags: restic_rest
-
 - name: Template service
   ansible.builtin.template:
     src: service.j2
