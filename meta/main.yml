@@ -1,8 +1,9 @@
 ---
-
 galaxy_info:
-  author: Donat Kh
-  description: Rest Server is a high performance HTTP server that implements restic's REST backend API
+  author: ItsNotGoodName
+  namespace: itsnotgoodname
+  description: Rest Server is a high performance HTTP server that implements restic's REST backend API.
+  role_name: restic_rest
   license: BSD
   min_ansible_version: 2.4
   platforms:

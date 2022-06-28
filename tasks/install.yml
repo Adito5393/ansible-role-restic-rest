@@ -1,29 +1,28 @@
 ---
-
 - name: Decompress the binary
   ansible.builtin.unarchive:
-    src: '{{ restic_rest_url }}'
+    src: "{{ restic_rest_url }}"
     dest: "{{ restic_install_path }}"
     remote_src: true
-    creates: '{{ restic_install_path }}/{{ restic_download_dir }}/{{ restic_rest_binary }}'
+    creates: "{{ restic_install_path }}/{{ restic_download_dir }}/{{ restic_rest_binary }}"
   become: true
 
 - name: Ensure binary permissions are correct
   ansible.builtin.file:
-    path: '{{ restic_install_path }}/{{ restic_download_dir }}/{{ restic_rest_binary }}'
-    mode: '0755'
-    owner: 'root'
-    group: 'root'
+    path: "{{ restic_install_path }}/{{ restic_download_dir }}/{{ restic_rest_binary }}"
+    mode: "0755"
+    owner: "root"
+    group: "root"
   when: not ansible_check_mode
   become: true
 
 - name: Create symlink
   ansible.builtin.file:
-    path: '{{ restic_install_path }}/{{ restic_rest_binary }}'
-    src: '{{ restic_install_path }}/{{ restic_download_dir }}/{{ restic_rest_binary }}'
-    state: 'link'
-    mode: '0755'
-    owner: 'root'
-    group: 'root'
+    path: "{{ restic_install_path }}/{{ restic_rest_binary }}"
+    src: "{{ restic_install_path }}/{{ restic_download_dir }}/{{ restic_rest_binary }}"
+    state: "link"
+    mode: "0755"
+    owner: "root"
+    group: "root"
   when: not ansible_check_mode
   become: true

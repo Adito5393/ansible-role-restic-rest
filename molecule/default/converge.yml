@@ -1,0 +1,22 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    restic_rest_repos:
+      - path: "/tmp/backup_0"
+        listen: ":8000"
+      - path: "/tmp/backup_1"
+        listen: ":8001"
+        args: "--append-only --prometheus"
+      - path: "/tmp/backup_2"
+        listen: ":8002"
+  pre_tasks:
+    - name: Update apt cache
+      ansible.builtin.apt: update_cache=true cache_valid_time=600
+      when: ansible_os_family == 'Debian'
+      changed_when: false
+      become: true
+  tasks:
+    - name: "Include itsnotgoodname.restic_rest"
+      ansible.builtin.include_role:
+        name: "itsnotgoodname.restic_rest"
