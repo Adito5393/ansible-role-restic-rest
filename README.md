@@ -18,4 +18,4 @@ restic_rest_accounts:
 
 ## License
 
-BSD [![License](https://raw.githubusercontent.com/donat-b/ansible-restic-rest/master/.github/license.svg?sanitize=true)](https://github.com/donat-b/ansible-restic-rest/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/itsnotgoodname/ansible-role-restic-rest)](./LICENSE)
