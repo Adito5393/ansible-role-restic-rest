@@ -1,6 +1,6 @@
 # ansible-role-restic-rest
 
-Deploy [rest-server for restic](https://github.com/restic/rest-server).
+Deploy [rest-server](https://github.com/restic/rest-server) for restic.
 
 ## Requirements
 

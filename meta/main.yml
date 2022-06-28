@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: itsnotgoodname
-  description: Rest Server is a high performance HTTP server that implements restic's REST backend API.
+  description: Deploy rest-server for restic.
   role_name: restic_rest
   license: BSD
   min_ansible_version: "2.4"
