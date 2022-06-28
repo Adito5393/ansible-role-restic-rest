@@ -1,0 +1,22 @@
+---
+- name: Create user
+  ansible.builtin.user:
+    name: "{{ restic_rest_user }}"
+  become: true
+  tags: restic_rest
+
+- name: Template service
+  ansible.builtin.template:
+    src: service.j2
+    dest: "/etc/systemd/system/{{ restic_rest_service }}"
+    mode: 0644
+  become: true
+  notify: restart rest-server
+  tags: restic_rest
+
+- name: Enable service
+  ansible.builtin.systemd:
+    enabled: true
+    name: "{{ restic_rest_service }}"
+  become: true
+  tags: restic_rest

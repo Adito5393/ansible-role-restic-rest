@@ -1,8 +1,7 @@
 ---
-# vi: ft=ansible :
-
-- name: rest-server restart
-  become: true
+- name: restart rest-server
   ansible.builtin.systemd:
-    name: 'rest-server.target'
-    state: 'restarted'
+    name: "{{ restic_rest_service }}"
+    state: restarted
+    daemon_reload: true
+  become: true

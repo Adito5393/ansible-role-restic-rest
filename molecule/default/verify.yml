@@ -1,10 +1,16 @@
 ---
-# This is an example playbook to execute Ansible tests.
-
 - name: Verify
   hosts: all
   gather_facts: false
+  vars_files:
+    - ../../defaults/main.yml
   tasks:
-  - name: Example assertion
-    assert:
-      that: true
+    - name: Collect facts about system services
+      ansible.builtin.service_facts:
+      register: services_state
+
+    - name: Assert
+      ansible.builtin.assert:
+        that:
+          - 'services_state.ansible_facts.services["{{ restic_rest_service }}"]["state"] == "running"'
+          - 'services_state.ansible_facts.services["{{ restic_rest_service }}"]["status"] == "enabled"'

@@ -1,28 +1,44 @@
 ---
-- name: Decompress the binary
-  ansible.builtin.unarchive:
-    src: "{{ restic_rest_url }}"
-    dest: "{{ restic_install_path }}"
-    remote_src: true
-    creates: "{{ restic_install_path }}/{{ restic_download_dir }}/{{ restic_rest_binary }}"
-  become: true
+- name: Check if already installed
+  ansible.builtin.stat:
+    path: "{{ restic_rest_path }}"
+  register: restic_rest_binary_register
+  tags: restic_rest
 
-- name: Ensure binary permissions are correct
-  ansible.builtin.file:
-    path: "{{ restic_install_path }}/{{ restic_download_dir }}/{{ restic_rest_binary }}"
-    mode: "0755"
-    owner: "root"
-    group: "root"
-  when: not ansible_check_mode
-  become: true
+- name: Get installed version
+  ansible.builtin.shell: |
+    set -o pipefail
+    rest-server -v | grep -Poe "(\d+\.)(\d+\.)(\d+)" | head -1
+  args:
+    executable: /bin/bash
+  register: restic_rest_version_register
+  changed_when: false
+  when: restic_rest_binary_register.stat.exists
+  tags: restic_rest
 
-- name: Create symlink
-  ansible.builtin.file:
-    path: "{{ restic_install_path }}/{{ restic_rest_binary }}"
-    src: "{{ restic_install_path }}/{{ restic_download_dir }}/{{ restic_rest_binary }}"
-    state: "link"
-    mode: "0755"
-    owner: "root"
-    group: "root"
-  when: not ansible_check_mode
+- name: Install
+  block:
+    - name: Download
+      ansible.builtin.get_url:
+        url: "{{ restic_rest_url }}"
+        checksum: "{{ restic_rest_checksum | default(omit) }}"
+        dest: "/tmp/{{ restic_rest_download_dir }}.tar.gz"
+        mode: 0644
+
+    - name: Unarchive
+      ansible.builtin.unarchive:
+        src: "/tmp/{{ restic_rest_download_dir }}.tar.gz"
+        dest: "/tmp"
+        remote_src: true
+
+    - name: Install
+      ansible.builtin.copy:
+        src: "/tmp/{{ restic_rest_download_dir }}/rest-server"
+        dest: "{{ restic_rest_path }}"
+        mode: 0755
+        remote_src: true
+      notify: restart rest-server
+
   become: true
+  tags: restic_rest
+  when: not restic_rest_binary_register.stat.exists or (restic_rest_version_register.stdout | default('')) != restic_rest_version
