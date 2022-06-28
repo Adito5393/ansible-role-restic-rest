@@ -17,9 +17,9 @@ restic_rest_path: /usr/local/bin/rest-server
 restic_rest_service: rest-server.service
 restic_rest_no_log: true
 restic_rest_htpasswd_crypt_scheme: ldap_sha1
-#restic_rest_accounts:
-#  - name: admin
-#    password: Chang3Me
+# restic_rest_accounts:
+#   - name: admin
+#     password: Chang3Me
 
 restic_rest_args_path: /tmp
 restic_rest_args_listen: :8000

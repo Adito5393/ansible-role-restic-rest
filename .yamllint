@@ -4,5 +4,5 @@ extends: default
 rules:
   # 160 chars should be enough, but don't fail if a line is longer
   line-length:
-    max: 180
+    max: 220
     level: warning

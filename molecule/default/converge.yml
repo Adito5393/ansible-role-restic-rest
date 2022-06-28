@@ -11,4 +11,3 @@
     - name: "Include itsnotgoodname.restic_rest"
       ansible.builtin.import_role:
         name: "itsnotgoodname.restic_rest"
-
