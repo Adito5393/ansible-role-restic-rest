@@ -1,4 +1,14 @@
 ---
+- name: "Create {{ restic_rest_args_path }}"
+  ansible.builtin.file:
+    path: "{{ restic_rest_args_path }}"
+    owner: "{{ restic_rest_user }}"
+    group: "{{ restic_rest_group }}"
+    state: directory
+    mode: 0755
+  become: true
+  tags: restic_rest
+
 - name: Template service
   ansible.builtin.template:
     src: service.j2

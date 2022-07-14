@@ -21,6 +21,6 @@ restic_rest_htpasswd_crypt_scheme: ldap_sha1
 #   - name: admin
 #     password: Chang3Me
 
-restic_rest_args_path: /tmp
+restic_rest_args_path: /tmp/restic
 restic_rest_args_listen: :8000
 restic_rest_args: "{{ restic_rest_accounts is defined | ternary('--private-repos','--no-auth') }}"
