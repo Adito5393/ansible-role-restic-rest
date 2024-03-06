@@ -14,7 +14,7 @@ restic_rest_version: "0.11.0"
 restic_rest_url: "https://github.com/restic/rest-server/releases/download/v{{ restic_rest_version }}/rest-server_{{ restic_rest_version }}_{{ ansible_system | lower }}_{{ restic_rest_architecture }}.tar.gz"
 restic_rest_download_dir: "rest-server_{{ restic_rest_version }}_{{ ansible_system | lower }}_{{ restic_rest_architecture }}"
 restic_rest_path: /usr/local/bin/rest-server
-restic_rest_service: rest-server.service
+restic_rest_service: rest-server
 restic_rest_no_log: true
 restic_rest_htpasswd_crypt_scheme: ldap_sha1
 # restic_rest_accounts:
@@ -22,5 +22,5 @@ restic_rest_htpasswd_crypt_scheme: ldap_sha1
 #     password: Chang3Me
 
 restic_rest_args_path: /tmp/restic
-restic_rest_args_listen: :8000
+restic_rest_args_listen: 8000
 restic_rest_args: "{{ restic_rest_accounts is defined | ternary('--private-repos','--no-auth') }}"

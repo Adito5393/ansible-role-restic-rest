@@ -1,0 +1,9 @@
+[Unit]
+Description=Rest Server Restic Socket
+PartOf={{ restic_rest_service }}.service
+
+[Socket]
+ListenStream = {{ restic_rest_args_listen }}
+
+[Install]
+WantedBy = sockets.target

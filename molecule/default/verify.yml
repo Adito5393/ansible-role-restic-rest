@@ -12,5 +12,5 @@
     - name: Assert
       ansible.builtin.assert:
         that:
-          - 'services_state.ansible_facts.services["{{ restic_rest_service }}"]["state"] == "running"'
-          - 'services_state.ansible_facts.services["{{ restic_rest_service }}"]["status"] == "enabled"'
+          - 'services_state.ansible_facts.services["{{ restic_rest_service }}.service"]["state"] == "running"'
+          - 'services_state.ansible_facts.services["{{ restic_rest_service }}.service"]["status"] == "enabled"'
