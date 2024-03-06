@@ -2,19 +2,34 @@
 dependency:
   name: galaxy
 driver:
-  name: podman
+  name: docker
 platforms:
-  - name: instance
-    image: "docker.io/geerlingguy/docker-${MOLECULE_DISTRO:-debian11}-ansible:latest"
-    command: /sbin/init
+  - name: restic-rest-${MOLECULE_DISTRO:-ubuntu2204}-${TAG:-latest}
+    image: docker.io/geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2204}-ansible:latest
+    command: ""
     privileged: true
+    cgroupns: host
     tmpfs:
       - /run
       - /tmp
     volumes:
-      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
     pre_build_image: true
 provisioner:
   name: ansible
+  # env:
+  #   ANSIBLE_VERBOSITY: 3
+  inventory:
+    group_vars:
+      all:
+        ansible_user: root
+        restic_rest_user: adi
+        restic_rest_version: "0.12.1"
+        restic_rest_checksum: "sha256:58f886043c62b7908a1b8b684e0d2388dfaabecaf2fbcd3e0aaa5a3be2f2306f"
+        restic_rest_accounts:
+          - name: admin
+            password: Chang3Me
+        restic_rest_htpasswd_crypt_scheme: bcrypt
+        restic_rest_args: --private-repos --prometheus --prometheus-no-auth
 verifier:
   name: ansible
